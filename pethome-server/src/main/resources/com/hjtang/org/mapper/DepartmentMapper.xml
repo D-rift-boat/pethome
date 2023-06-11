@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--注：namespace的内容就是ProductMapper接口的全限定名-->
+<mapper namespace="com.hjtang.org.mapper.DepartmentMapper">
+    <!--id的值保证ProductMapper接口的方法名一致-->
+    <select id="findAll" resultType="com.hjtang.org.domain.Department">
+        select * from t_department
+    </select>
+
+    <select id="queryDepartment" resultType="com.hjtang.org.domain.Department">
+        select * from t_department
+        <where>
+            <if test="keyword != null and keyword != ''">
+                name like concat('%',trim(#{keyword}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findOne" resultType="com.hjtang.org.domain.Department">
+        select * from t_department where id = #{id}
+    </select>
+
+    <insert id="save">
+        insert into t_department values(null,
+                                        #{sn},
+                                        #{name},
+                                        #{dirPath},
+                                        #{state},
+                                        #{managerId},
+                                        #{parentId})
+    </insert>
+
+    <update id="update">
+        update t_department
+        set sn        = #{sn},
+            name      = #{name},
+            dirPath   = #{dirPath},
+            state     = #{state},
+            manager_id = #{managerId},
+            parent_id  = #{parentId}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from t_department where id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        delete from t_department where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
