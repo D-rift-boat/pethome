@@ -38,7 +38,7 @@ public class SwaggerConfig {
 //                .enable(false)
                 .select()
                 //对外暴露服务的包,以controller的方式暴露,所以就是controller的包.
-                .apis(RequestHandlerSelectors.basePackage("cn.itsource"))
+                .apis(RequestHandlerSelectors.basePackage("com.hjtang"))
                 .paths(PathSelectors.any())
                 .build().globalOperationParameters(pars);
     }

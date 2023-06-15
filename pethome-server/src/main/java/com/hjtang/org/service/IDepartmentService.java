@@ -2,6 +2,7 @@ package com.hjtang.org.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hjtang.basic.query.BaseQuery;
+import com.hjtang.basic.query.DepartmentQuery;
 import com.hjtang.org.domain.Department;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface IDepartmentService {
     //查询所有
     List<Department> findAll();
     //条件 分页查询
-    PageInfo<Department> queryDepartment(BaseQuery query);
+    PageInfo<Department> queryDepartment(DepartmentQuery query);
     //id单个查询
     Department findOne(Long id);
     //根据id删除
@@ -21,4 +22,6 @@ public interface IDepartmentService {
     void save(Department department);
     //修改
     void update(Department department);
+
+    List<Department> deptTree(Long id);
 }

@@ -3,6 +3,7 @@ package com.hjtang;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 //启动类也可以作为配置
 //@SpringBootConfiguration
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //只会扫描当前包及其子包
 @SpringBootApplication
 @MapperScan("com.hjtang.*.mapper")
+@EnableCaching
 public class Application {
 
     public static void main(String[] args) {

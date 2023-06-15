@@ -8,8 +8,18 @@
         select * from t_department
     </select>
 
-    <select id="queryDepartment" resultType="com.hjtang.org.domain.Department">
-        select * from t_department
+<!--    查出关联表  的id字段   是用于表格增删改查使用（虽不展示该id）-->
+    <select id="queryDepartment" resultMap="queryMapper">
+        SELECT
+            d.*,
+            e.id eid,
+            e.username,
+            p.id pid,
+            p.NAME pname
+        FROM
+            t_department d
+            LEFT JOIN t_employee e ON d.manager_id = e.id
+            LEFT JOIN t_department p ON d.parent_id = p.id
         <where>
             <if test="keyword != null and keyword != ''">
                 name like concat('%',trim(#{keyword}),'%')
@@ -17,11 +27,37 @@
         </where>
     </select>
 
+    <resultMap id="queryMapper"  type="com.hjtang.org.domain.Department">
+        <id property="id" column="id"></id>
+        <result property="sn" column="sn"></result>
+        <result property="name" column="name"></result>
+        <result property="dirPath" column="dirPath"></result>
+        <result property="state" column="state"></result>
+        <result property="managerId" column="manager_id"></result>
+        <result property="parentId" column="parent_id"></result>
+        <association property="manager" javaType="com.hjtang.org.domain.Employee">
+            <id property="id" column="eid"></id>
+            <result property="username" column="username"></result>
+        </association>
+        <association property="parentDepartment" javaType="com.hjtang.org.domain.Department">
+            <id property="id" column="pid"></id>
+            <result property="name" column="pname"></result>
+        </association>
+    </resultMap>
+
     <select id="findOne" resultType="com.hjtang.org.domain.Department">
         select * from t_department where id = #{id}
     </select>
 
-    <insert id="save">
+<!--    查询不包含本部门 的部门信息-->
+    <select id="findOther" resultType="com.hjtang.org.domain.Department">
+        select *
+        from t_department
+        where dirPath not like concat('%/', #{id})
+            and dirPath not like concat('%/', #{id}, '/%')
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into t_department values(null,
                                         #{sn},
                                         #{name},

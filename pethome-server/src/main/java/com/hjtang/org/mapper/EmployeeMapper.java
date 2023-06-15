@@ -1,27 +1,25 @@
 package com.hjtang.org.mapper;
 
 import com.hjtang.basic.query.BaseQuery;
-import com.hjtang.org.domain.Department;
+import com.hjtang.org.domain.Employee;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface DepartmentMapper {
+public interface EmployeeMapper {
     //查询所有
-    List<Department> findAll();
+    List<Employee> findAll();
     //条件 分页查询
-    List<Department> queryDepartment(BaseQuery query);
+    List<Employee> queryEmployee(BaseQuery query);
     //id单个查询
-    Department findOne(Long id);
+    Employee findOne(Long id);
     //根据id删除
     void delete(Long id);
     //批量删除
     void batchDelete(List<Long> ids);
     //新增
-    void save(Department department);
+    void save(Employee department);
     //修改
-    void update(Department department);
-
-    List<Department> findOther(Long id);
+    void update(Employee department);
 }
